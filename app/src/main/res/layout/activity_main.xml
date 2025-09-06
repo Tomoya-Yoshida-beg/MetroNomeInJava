@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <NumberPicker
+        android:id="@+id/pickRepeatTimesAll"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:descendantFocusability="blocksDescendants"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/textView6"
+        app:layout_constraintTop_toBottomOf="@+id/pickUpAndDown" />
+
+    <NumberPicker
+        android:id="@+id/pickUpAndDown"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:descendantFocusability="blocksDescendants"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/pickChangeAmountBpm"
+        app:layout_constraintTop_toBottomOf="@+id/pickRepeatBar" />
+
+    <NumberPicker
+        android:id="@+id/pickChangeAmountBpm"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:descendantFocusability="blocksDescendants"
+        app:layout_constraintEnd_toStartOf="@+id/pickUpAndDown"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/tvBpmControl"
+        app:layout_constraintTop_toTopOf="@+id/pickUpAndDown" />
+
+    <NumberPicker
+        android:id="@+id/pickRepeatBar"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:descendantFocusability="blocksDescendants"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/tvRepeatTimes"
+        app:layout_constraintTop_toBottomOf="@+id/pickBeatDenominator" />
+
+    <NumberPicker
+        android:id="@+id/pickBeatDenominator"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:descendantFocusability="blocksDescendants"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/tvBeatsSlash"
+        app:layout_constraintTop_toBottomOf="@+id/pickBpm" />
+
+    <NumberPicker
+        android:id="@+id/pickBeatNumerator"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:descendantFocusability="blocksDescendants"
+        app:layout_constraintEnd_toStartOf="@+id/tvBeatsSlash"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/tvBeat"
+        app:layout_constraintTop_toTopOf="@+id/pickBeatDenominator" />
+
+    <TextView
+        android:id="@+id/tvBeat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="拍子"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="@+id/pickBeatNumerator"
+        app:layout_constraintEnd_toStartOf="@+id/pickBeatNumerator"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/pickBeatNumerator" />
+
+    <Button
+        android:id="@+id/startButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Start / Stop"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/inputBpm" />
+
+    <EditText
+        android:id="@+id/inputBpm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:digits="0123456789"
+        android:ems="10"
+        android:hint="BPMを入力してください"
+        android:inputType="text"
+        android:maxLength="3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.572"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <NumberPicker
+        android:id="@+id/pickBpm"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:descendantFocusability="blocksDescendants"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/tvBPM"
+        app:layout_constraintTop_toBottomOf="@+id/startButton" />
+
+    <TextView
+        android:id="@+id/tvBPM"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="BPM:"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="@+id/pickBpm"
+        app:layout_constraintEnd_toStartOf="@+id/pickBpm"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/pickBpm" />
+
+    <TextView
+        android:id="@+id/tvBeatsSlash"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="/"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/pickBeatDenominator"
+        app:layout_constraintEnd_toStartOf="@+id/pickBeatDenominator"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/pickBeatNumerator"
+        app:layout_constraintTop_toTopOf="@+id/pickBeatDenominator" />
+
+    <TextView
+        android:id="@+id/tvRepeatTimes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="何小節繰り返す?"
+        app:layout_constraintBottom_toBottomOf="@+id/pickRepeatBar"
+        app:layout_constraintEnd_toStartOf="@+id/pickRepeatBar"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/pickRepeatBar" />
+
+    <TextView
+        android:id="@+id/tvBpmControl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="BPMを"
+        app:layout_constraintBottom_toBottomOf="@+id/pickChangeAmountBpm"
+        app:layout_constraintEnd_toStartOf="@+id/pickChangeAmountBpm"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/pickChangeAmountBpm" />
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="これを何回繰り返す?"
+        app:layout_constraintBottom_toBottomOf="@+id/pickRepeatTimesAll"
+        app:layout_constraintEnd_toStartOf="@+id/pickRepeatTimesAll"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/pickRepeatTimesAll" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
