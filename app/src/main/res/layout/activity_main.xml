@@ -8,6 +8,27 @@
     tools:context=".MainActivity">
 
     <NumberPicker
+        android:id="@+id/pickEndBpm"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:descendantFocusability="blocksDescendants"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/tvPickEndBpm"
+        app:layout_constraintTop_toBottomOf="@+id/pickUpAndDown" />
+
+    <TextView
+        android:id="@+id/tvPickEndBpm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="どのBPMまで?"
+        app:layout_constraintBottom_toBottomOf="@+id/pickEndBpm"
+        app:layout_constraintEnd_toStartOf="@+id/pickEndBpm"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/pickEndBpm" />
+
+    <NumberPicker
         android:id="@+id/pickRepeatTimesAll"
         android:layout_width="wrap_content"
         android:layout_height="40dp"
@@ -15,7 +36,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/textView6"
-        app:layout_constraintTop_toBottomOf="@+id/pickUpAndDown" />
+        app:layout_constraintTop_toBottomOf="@+id/pickEndBpm" />
 
     <NumberPicker
         android:id="@+id/pickUpAndDown"

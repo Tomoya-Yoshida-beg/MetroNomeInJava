@@ -8,6 +8,8 @@ import android.widget.NumberPicker;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
@@ -43,15 +45,37 @@ public class MainActivity extends AppCompatActivity {
         int bpm = 120; // 現在値
 
 
-        NumberPicker picker = findViewById(R.id.pickBpm);
+        NumberPicker pickBpm = findViewById(R.id.pickBpm);
+        NumberPicker pickBeatNumerator = findViewById(R.id.pickBeatNumerator);
+        NumberPicker pickBeatDenominator = findViewById(R.id.pickBeatDenominator);
+        NumberPicker pickRepeatBar = findViewById(R.id.pickRepeatBar);
+        NumberPicker pickChangeAmountBpm = findViewById(R.id.pickChangeAmountBpm);
+        NumberPicker pickUpAndDown = findViewById(R.id.pickUpAndDown);
+        NumberPicker pickEndBpm = findViewById(R.id.pickEndBpm);
+        NumberPicker pickRepeatTimesAll = findViewById(R.id.pickRepeatTimesAll);
 
-        picker.setMinValue(40);     // 最小値
-        picker.setMaxValue(240);    // 最大値
-        picker.setValue(120);       // 初期値
-        picker.setWrapSelectorWheel(true);  // 端でループさせる
 
 
-        // ボタンの設定
+        List<NumberPickerConfig> configs = Arrays.asList(
+                new NumberPickerConfig.Builder(R.id.pickBpm)
+                        .range(40,300,120).step(1).wrap(true).build(),
+                new NumberPickerConfig.Builder(R.id.pickBeatNumerator)
+                        .range(2,8,4).step(1).wrap(true).build(),
+                new NumberPickerConfig.Builder(R.id.pickBeatDenominator)
+                        .range(2,19,4).step(1).wrap(true).build(),
+                new NumberPickerConfig.Builder(R.id.pickRepeatBar)
+                        .range(2,40,4).step(1).wrap(true).build(),
+                new NumberPickerConfig.Builder(R.id.pickChangeAmountBpm)
+                        .range(1,40,8).step(1).wrap(true).build(),
+                new NumberPickerConfig.Builder(R.id.pickUpAndDown)
+                        .labels(new String[]{"上げる","下げる"},0).build(),
+                new NumberPickerConfig.Builder(R.id.pickEndBpm)
+                        .range(40,300,120).step(1).wrap(true).build(),
+                new NumberPickerConfig.Builder(R.id.pickRepeatTimesAll)
+                        .range(1,40,4).step(1).wrap(true).build()
+        );
+
+
         Button btn = findViewById(R.id.startButton);
         btn.setOnClickListener(v -> toggleMetronome());
     }
