@@ -4,10 +4,10 @@ package beg.yoshida.metronomeinjava;
 //豪華なコンストラクタ
 public class NumberPickerConfig {
     public final int viewId;
-    public final boolean wrap;
+    public final Boolean wrap;
     public final Integer min, max;
     public final Integer initial;
-    public final Integer step;
+//    public final Integer step;
     public final String[] labels;
 
 
@@ -17,7 +17,7 @@ public class NumberPickerConfig {
         this.min    = b.min;
         this.max    = b.max;
         this.initial= b.init;
-        this.step   = b.step;
+//        this.step   = b.step;
         this.labels = b.labels;
     }
 
@@ -37,10 +37,10 @@ public class NumberPickerConfig {
             return this;
         }
 
-        public Builder step (int step) {
-            this.step = step;
-            return this;
-        }
+//        public Builder step (int step) {
+//            this.step = step;
+//            return this;
+//        }
 
         public Builder wrap(boolean wrap) {
             this.wrap = wrap;
@@ -50,6 +50,8 @@ public class NumberPickerConfig {
         public Builder labels(String[] labels, int initIndex) {
             this.labels = labels;
             this.init = initIndex;
+            this.min = 0;
+            this.max = labels.length-1;
             return this;
         }
 
