@@ -92,35 +92,6 @@ public class MainActivity extends AppCompatActivity {
         Button btn = findViewById(R.id.startButton);
         btn.setOnClickListener(v -> toggleMetronome());
 
-        //リスナー設定
-        NumberPicker.OnValueChangeListener common = (np, oldVal, newVal) -> {
-            String[] displayValue = np.getDisplayedValues();
-            if (np.getId() == R.id.pickBpm){
-                userBpm = Integer.valueOf(displayValue[newVal]);
-            } else if (np.getId() == R.id.pickBeatNumerator) {
-                numerator = Integer.valueOf(displayValue[newVal]);
-            } else if (np.getId() == R.id.pickBeatDenominator) {
-                denominator = Integer.valueOf(displayValue[newVal]);
-            } else if (np.getId() == R.id.pickRepeatBar) {
-                repeatBar = Integer.valueOf(displayValue[newVal]);
-            } else if (np.getId() == R.id.pickChangeAmountBpm) {
-                changeAmountBar = Integer.valueOf(displayValue[newVal]);
-            } else if (np.getId() == R.id.pickUpAndDown) {
-                upAndDown = displayValue[newVal];
-            } else if (np.getId() == R.id.pickEndBpm) {
-                endBpm = Integer.valueOf(displayValue[newVal]);
-            } else if (np.getId() == R.id.pickRepeatTimesAll) {
-                repeatTimesAll = Integer.valueOf(displayValue[newVal]);
-            } else {}
-        };
-
-        //リスナー登録
-        for (NumberPicker np : new NumberPicker[]{
-                pickBpm, pickBeatNumerator, pickBeatDenominator, pickRepeatBar,
-                pickChangeAmountBpm, pickUpAndDown, pickEndBpm, pickRepeatTimesAll
-        }) {
-            if (np != null) np.setOnValueChangedListener(common);
-        }
 
     }
 
@@ -138,9 +109,14 @@ public class MainActivity extends AppCompatActivity {
 
         scheduler = new ScheduledThreadPoolExecutor(1);
         scheduledTask = scheduler.scheduleWithFixedDelay(
+                //実行内容->runnableか何かを実装する必要がある。処理後にインターバルが発生するので軽くする必要がある。
+                //最初にロードできないか?
                 () -> soundPool.play(soundId, 1f, 1f, 1, 0, 1f),
+                //開始時間
                 0,
+                //インターバル
                 bpmToMs,
+                //定数
                 TimeUnit.MILLISECONDS
         );
         isRunning = true;
