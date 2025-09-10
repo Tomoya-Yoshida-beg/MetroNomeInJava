@@ -8,13 +8,14 @@ import android.widget.NumberPicker;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity{
 
 
     private SoundPool soundPool;
@@ -27,11 +28,15 @@ public class MainActivity extends AppCompatActivity {
     int numerator;
     int denominator;
     int repeatBar;
-    int changeAmountBar;
+    int changeAmount;
     String upAndDown;
     int endBpm;
     int repeatTimesAll;
 
+    int HowManySounded;
+    int HowPastBar;
+
+    ArrayList<Integer> bpms;
 
     long bpmToMs;
 
@@ -39,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
     NumberPicker pickBeatNumerator;
     NumberPicker pickBeatDenominator;
     NumberPicker pickRepeatBar;
-    NumberPicker pickChangeAmountBpm;
+    NumberPicker pickChangeAmount;
     NumberPicker pickUpAndDown;
     NumberPicker pickEndBpm;
     NumberPicker pickRepeatTimesAll;
@@ -55,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
         pickBeatNumerator   = findViewById(R.id.pickBeatNumerator);
         pickBeatDenominator = findViewById(R.id.pickBeatDenominator);
         pickRepeatBar       = findViewById(R.id.pickRepeatBar);
-        pickChangeAmountBpm = findViewById(R.id.pickChangeAmountBpm);
+        pickChangeAmount = findViewById(R.id.pickChangeAmountBpm);
         pickUpAndDown       = findViewById(R.id.pickUpAndDown);
         pickEndBpm          = findViewById(R.id.pickEndBpm);
         pickRepeatTimesAll  = findViewById(R.id.pickRepeatTimesAll);
@@ -78,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
                 new NumberPickerConfig.Builder(R.id.pickChangeAmountBpm)
                         .range(1,40,8).wrap(true).build(),
                 new NumberPickerConfig.Builder(R.id.pickUpAndDown)
-                        .labels(new String[]{"上げる","下げる"},0).build(),
+                        .labels(new String[]{"下げる","上げる"},0).build(),
                 new NumberPickerConfig.Builder(R.id.pickEndBpm)
                         .range(40,300,120).wrap(true).build(),
                 new NumberPickerConfig.Builder(R.id.pickRepeatTimesAll)
@@ -103,22 +108,52 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    ArrayList<Integer> makeSequenceBpm() {
+
+        bpms = new ArrayList<Integer>();
+
+        if (pickChangeAmount.getValue() == 0){
+            for(int i = 0; userBpm >= endBpm; userBpm=-changeAmount){
+                bpms.add(userBpm);
+            }
+        } else {
+            for(int i = 0; userBpm <= endBpm; userBpm=+changeAmount){
+                bpms.add(userBpm);
+            }
+        }
+        return bpms;
+    }
+
     private void startMetronome() {
 
-        bpmToMs = 60000/userBpm;
+        makeSequenceBpm();
 
         scheduler = new ScheduledThreadPoolExecutor(1);
+        //cancel()したタスクをキューから破棄をするよう設定
+        scheduler.setRemoveOnCancelPolicy(true);
+
+        //scheduleWithFixedDelay()の返り値はScheduledFuture
         scheduledTask = scheduler.scheduleWithFixedDelay(
                 //実行内容->runnableか何かを実装する必要がある。処理後にインターバルが発生するので軽くする必要がある。
-                //最初にロードできないか?
-                () -> soundPool.play(soundId, 1f, 1f, 1, 0, 1f),
+                //最初にロードできないか?出来ないらしい。
+                () -> {
+                     if (isRunning && HowManySounded <= numerator*repeatBar){
+                    soundPool.play(soundId, 1f, 1f, 1, 0, 1f);
+                        } else {
+                         scheduledTask.cancel(false);
+                         //再度scheduleWithFixedDelay()
+                     }
+                    },
                 //開始時間
-                0,
+                60000/bpms.get(HowPastBar),
                 //インターバル
-                bpmToMs,
+                60000/bpms.get(HowPastBar),
                 //定数
                 TimeUnit.MILLISECONDS
         );
+
+
+
         isRunning = true;
     }
 
@@ -130,11 +165,10 @@ public class MainActivity extends AppCompatActivity {
             scheduler.shutdownNow();
         }
         isRunning = false;
+        scheduler.shutdownNow();
+        HowManySounded = 0;
+        HowPastBar = 0;
     }
-
-
-
-
 
     //ライフサイクル
     @Override
